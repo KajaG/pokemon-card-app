@@ -1,26 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { GlobalStyle } from "./components/GlobalStyle";
+import { Page } from "./components/Page";
+import { PokemonList } from "./components/PokemonList";
 
-function App() {
+export const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyle />
+      <Page>
+        <h1>Moje sbírka Pokemon kartiček</h1>
+        <PokemonList />
+      </Page>
+    </>
   );
-}
-
-export default App;
+};
