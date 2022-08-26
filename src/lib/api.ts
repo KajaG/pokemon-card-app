@@ -5,9 +5,7 @@ export const axios = Axios.create({
 });
 
 export const api = {
-  fetchMons: () => axios.get(""),
-
   fetchMonInfo: (name: string) => axios.get(`/${name}`),
 
-  fetchMoreMons: (url: string) => axios.get(`${url}`),
+  fetchMons: (url: string) => axios.get(`${url}`),
 };

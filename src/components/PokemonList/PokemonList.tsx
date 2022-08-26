@@ -2,58 +2,41 @@ import React, { useState, useEffect } from "react";
 
 import { api } from "../../lib/api";
 import { IPokemonBasic } from "../../types";
-import { ButtonStyled } from "../Button/Button.styled";
+import { ButtonStyled } from "../Button/Button";
 
 import { PokemonCard } from "../PokemonCard";
 import { PokemonListStyled } from "./PokemonList.styled";
 
 export const PokemonList: React.FC = () => {
-  const [pokemons, setPokemons] = useState<IPokemonBasic[]>([]);
-  const [nextPage, setNextPage] = useState(String);
+  const [mons, setMons] = useState<IPokemonBasic[]>([]);
+  const [nextPage, setNextPage] = useState("");
 
-  const getData = async () => {
+  const fetchMons = async () => {
     try {
-      const result = await api.fetchMons();
-      setPokemons(result.data.results);
-      setNextPage(result.data.next);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      const result = await api.fetchMons(nextPage);
 
-  const fetchMoreMons = async (url: string) => {
-    try {
-      const result = await api.fetchMoreMons(url);
-
-      const newData = result.data.results;
-      const copy = pokemons.map((pokemon) => ({ ...pokemon }));
-
-      copy.push(...newData);
+      const newPokemons = result.data.results;
 
       setNextPage(result.data.next);
-      setPokemons(copy);
+      setMons([...mons, ...newPokemons]);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getData();
+    fetchMons();
   }, []);
-
-  const buttonClick = () => {
-    fetchMoreMons(nextPage);
-  };
 
   return (
     <>
       <PokemonListStyled>
-        {pokemons.map((mon, idx) => (
+        {mons.map((mon, idx) => (
           <PokemonCard key={idx} monName={mon.name} />
         ))}
       </PokemonListStyled>
 
-      <ButtonStyled onClick={() => buttonClick()}>Načíst více</ButtonStyled>
+      <ButtonStyled onClick={fetchMons}>Načíst více</ButtonStyled>
     </>
   );
 };

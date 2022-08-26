@@ -16,6 +16,19 @@ export interface IMonAbility {
   };
 }
 
+export interface IMonStatistics {
+  base_stat: number;
+  stat: {
+    name: string;
+  };
+}
+
+export interface IMonTypes {
+  type: {
+    name: string;
+  };
+}
+
 export interface IPokemonInfo {
   base_experience: number;
   weight: number;
@@ -29,4 +42,6 @@ export interface IPokemonInfo {
     };
   };
   abilities: IMonAbility[];
+  stats: IMonStatistics[];
+  types: IMonTypes[];
 }
